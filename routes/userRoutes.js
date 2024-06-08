@@ -23,4 +23,17 @@ router.post(
   responseMiddleware
 );
 
+router.get(
+  '/:id',
+  async (req, res, next) => {
+    const { id } = req.params;
+    const user = await userService.search({ id });
+
+    res.result = user;
+
+    next();
+  },
+  responseMiddleware
+);
+
 export { router };
