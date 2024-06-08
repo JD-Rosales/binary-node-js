@@ -1,7 +1,23 @@
-import { USER } from "../models/user.js";
+import { USER } from '../models/user.js';
+import { fieldValidator } from '../helpers/validationHelper.js';
+import { sendJSONResponse } from '../helpers/errorResponseHelper.js';
 
 const createUserValid = (req, res, next) => {
   // TODO: Implement validatior for USER entity during creation
+  const reqBody = req.body;
+
+  const rulesField = {
+    firstName: { required: true },
+    lastName: { required: true },
+    email: { required: true, email: true },
+    phoneNumber: { required: true, phoneNumber: true },
+    password: { required: true, minLength: 3 },
+  };
+
+  const error = fieldValidator({ rulesField, modelObject: USER, reqBody });
+
+  if (error) return sendJSONResponse(res, { message: error, code: 400 });
+
   next();
 };
 
