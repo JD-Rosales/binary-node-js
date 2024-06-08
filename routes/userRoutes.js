@@ -54,7 +54,20 @@ router.patch(
   async (req, res, next) => {
     const { id } = req.params;
     const reqBody = req.body;
-    const user = userService.updateUser(id, reqBody);
+    const user = await userService.updateUser(id, reqBody);
+
+    res.result = user;
+
+    next();
+  },
+  responseMiddleware
+);
+
+router.delete(
+  '/:id',
+  async (req, res, next) => {
+    const { id } = req.params;
+    const user = await userService.deleteUser(id);
 
     res.result = user;
 

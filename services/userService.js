@@ -34,6 +34,15 @@ class UserService {
     }
     return item;
   }
+
+  deleteUser(id) {
+    const item = userRepository.delete(id);
+    if (!item.length) {
+      return null;
+    }
+
+    return item;
+  }
 }
 
 const userService = new UserService();
