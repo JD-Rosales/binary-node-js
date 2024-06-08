@@ -26,6 +26,14 @@ class UserService {
     }
     return item;
   }
+
+  updateUser(id, dataToUpdate) {
+    const item = userRepository.update(id, dataToUpdate);
+    if (!item) {
+      return null;
+    }
+    return item;
+  }
 }
 
 const userService = new UserService();
