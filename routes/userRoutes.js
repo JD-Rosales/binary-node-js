@@ -36,4 +36,16 @@ router.get(
   responseMiddleware
 );
 
+router.get(
+  '/',
+  async (req, res, next) => {
+    const users = await userService.getAllUsers();
+
+    res.result = users;
+
+    next();
+  },
+  responseMiddleware
+);
+
 export { router };

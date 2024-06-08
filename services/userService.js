@@ -18,6 +18,14 @@ class UserService {
     }
     return item;
   }
+
+  getAllUsers() {
+    const item = userRepository.getAll();
+    if (!item) {
+      return null;
+    }
+    return item;
+  }
 }
 
 const userService = new UserService();
