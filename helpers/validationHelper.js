@@ -8,10 +8,34 @@ function isValidPhoneNumber(phoneNumber) {
   return phonePattern.test(phoneNumber);
 }
 
-function fieldValidator(ruleFields, valuesObject) {
-  for (const ruleField in ruleFields) {
-    const rule = ruleFields[ruleField];
-    const value = valuesObject[ruleField];
+function hasExtraFields(modelObject, reqBody) {
+  if (
+    Object.keys(reqBody).some(
+      (field) => !Object.keys(modelObject).includes(field)
+    )
+  ) {
+    return true;
+  }
+}
+
+function hasIdField(reqBody) {
+  if ('id' in reqBody) {
+    return true;
+  }
+}
+
+function fieldValidator({ rulesField, modelObject, reqBody }) {
+  if (hasIdField(reqBody)) {
+    return `Request body has id field`;
+  }
+
+  if (hasExtraFields(modelObject, reqBody)) {
+    return `Request body has extra field/s`;
+  }
+
+  for (const ruleField in rulesField) {
+    const rule = rulesField[ruleField];
+    const value = reqBody[ruleField];
 
     // validation for required field
     if (rule.required) {
