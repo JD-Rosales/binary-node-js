@@ -48,4 +48,19 @@ router.get(
   responseMiddleware
 );
 
+router.patch(
+  '/:id',
+  updateUserValid,
+  async (req, res, next) => {
+    const { id } = req.params;
+    const reqBody = req.body;
+    const user = userService.updateUser(id, reqBody);
+
+    res.result = user;
+
+    next();
+  },
+  responseMiddleware
+);
+
 export { router };
