@@ -8,7 +8,7 @@ const responseMiddleware = (req, res, next) => {
 
   return sendJSONResponse(res, {
     message: 'requested data not found.',
-    status: 404,
+    code: 404,
   });
 };
 
