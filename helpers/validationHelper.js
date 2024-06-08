@@ -24,13 +24,21 @@ function hasIdField(reqBody) {
   }
 }
 
+function isValidPassword(minLength, password) {
+  if (password.length < minLength) {
+    return false;
+  }
+
+  return true;
+}
+
 function fieldValidator({ rulesField, modelObject, reqBody }) {
   if (hasIdField(reqBody)) {
-    return `Request body has id field`;
+    return `Request body contains id field.`;
   }
 
   if (hasExtraFields(modelObject, reqBody)) {
-    return `Request body has extra field/s`;
+    return `Request body contains extra field.`;
   }
 
   for (const ruleField in rulesField) {
@@ -60,11 +68,17 @@ function fieldValidator({ rulesField, modelObject, reqBody }) {
 
     // validattion for valid value length
     if (rule.minLength) {
-      if (value.length < rule.minLength) {
+      if (!isValidPassword(rule.minLength, value))
         return `${ruleField} must be at least ${rule.minLength} characters.`;
-      }
     }
   }
 }
 
-export { fieldValidator };
+export {
+  fieldValidator,
+  hasExtraFields,
+  hasIdField,
+  isValidEmail,
+  isValidPhoneNumber,
+  isValidPassword,
+};
