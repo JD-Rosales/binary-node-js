@@ -16,7 +16,7 @@ router.post(
     const reqBody = req.body;
     const user = await userService.create(reqBody);
 
-    res.result = user;
+    res.data = user;
 
     next();
   },
@@ -29,7 +29,7 @@ router.get(
     const { id } = req.params;
     const user = await userService.search({ id });
 
-    res.result = user;
+    res.data = user;
 
     next();
   },
@@ -41,7 +41,7 @@ router.get(
   async (req, res, next) => {
     const users = await userService.getAllUsers();
 
-    res.result = users;
+    res.data = users;
 
     next();
   },
@@ -56,7 +56,7 @@ router.patch(
     const reqBody = req.body;
     const user = await userService.updateUser(id, reqBody);
 
-    res.result = user;
+    res.data = user;
 
     next();
   },
@@ -69,7 +69,7 @@ router.delete(
     const { id } = req.params;
     const user = await userService.deleteUser(id);
 
-    res.result = user;
+    res.data = user;
 
     next();
   },

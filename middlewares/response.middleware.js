@@ -2,8 +2,8 @@ import { sendJSONResponse } from '../helpers/errorResponseHelper.js';
 
 const responseMiddleware = (req, res, next) => {
   // TODO: Implement middleware that returns result of the query
-  if (res.result) {
-    return res.status(200).json(res.result);
+  if (res.data) {
+    return res.status(200).json(res.data);
   }
 
   return sendJSONResponse(res, {

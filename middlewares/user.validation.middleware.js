@@ -51,20 +51,6 @@ const updateUserValid = (req, res, next) => {
   // TODO: Implement validatior for user entity during update
   const reqBody = req.body || {};
 
-  if (hasIdField(reqBody)) {
-    return sendJSONResponse(res, {
-      message: 'Request body contains id field',
-      code: 400,
-    });
-  }
-
-  if (hasExtraFields(USER, reqBody)) {
-    return sendJSONResponse(res, {
-      message: `Request body contains extra field.`,
-      code: 400,
-    });
-  }
-
   const userFields = Object.keys(USER);
   const reqFields = Object.keys(reqBody);
 
@@ -77,16 +63,23 @@ const updateUserValid = (req, res, next) => {
     });
   }
 
-  // if email exist in reqBody check if email is already in use
-  if (reqBody.email) {
-    // validation for valid email
-    if (!isValidEmail(reqBody.email)) {
-      return sendJSONResponse(res, {
-        message: 'email is not a valid email address.',
-        code: 400,
-      });
-    }
+  // dynamically add rules if object key is present in the reqBody
+  const rulesField = {
+    ...(reqBody.firstName && { firstName: { required: true } }),
+    ...(reqBody.lastName && { lastName: { required: true } }),
+    ...(reqBody.email && { email: { required: true, email: true } }),
+    ...(reqBody.phoneNumber && {
+      phoneNumber: { required: true, phoneNumber: true },
+    }),
+    ...(reqBody.password && { password: { required: true, minLength: 3 } }),
+  };
 
+  const error = fieldValidator({ rulesField, modelObject: USER, reqBody });
+
+  if (error) return sendJSONResponse(res, { message: error, code: 400 });
+
+  // Validate if email is already in use in the database
+  if (reqBody.email) {
     const emailExist = userService.search({ email: reqBody.email });
     if (emailExist)
       return sendJSONResponse(res, {
@@ -95,34 +88,14 @@ const updateUserValid = (req, res, next) => {
       });
   }
 
-  // if phone number exist in reqBody check if phone number is already in use
-  if (reqBody.phoneNumber) {
-    //validation for valid phone number
-    if (!isValidPhoneNumber(reqBody.phoneNumber)) {
-      return sendJSONResponse(res, {
-        message: 'phoneNumber is not a valid phone number.',
-        code: 400,
-      });
-    }
-
-    const phoneNumberExist = userService.search({
-      phoneNumber: reqBody.phoneNumber,
+  // Validate if fighter is stored in the database
+  const { id } = req.params;
+  const user = userService.search({ id });
+  if (!user)
+    return sendJSONResponse(res, {
+      message: `User with an id of ${id} cannot be found.`,
+      code: 404,
     });
-    if (phoneNumberExist)
-      return sendJSONResponse(res, {
-        message: 'Phone number is already in use.',
-        code: 400,
-      });
-  }
-
-  if (reqBody.password) {
-    if (!isValidPassword(3, reqBody.password)) {
-      return sendJSONResponse(res, {
-        message: `password must be at least 3 characters.`,
-        code: 400,
-      });
-    }
-  }
 
   next();
 };
