@@ -91,6 +91,15 @@ const updateFighterValid = (req, res, next) => {
       });
   }
 
+  // Validate if fighter is stored in the database
+  const { id } = req.params;
+  const fighter = fighterService.search({ id });
+  if (!fighter)
+    return sendJSONResponse(res, {
+      message: `Fighter with an id of ${id} cannot be found.`,
+      code: 404,
+    });
+
   next();
 };
 
