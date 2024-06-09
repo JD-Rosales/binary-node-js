@@ -32,6 +32,12 @@ function isValidPassword(minLength, password) {
   return true;
 }
 
+function isNumber(value) {
+  if (typeof value === 'number') {
+    return true;
+  }
+}
+
 function fieldValidator({ rulesField, modelObject, reqBody }) {
   if (hasIdField(reqBody)) {
     return `Request body contains id field.`;
@@ -52,6 +58,9 @@ function fieldValidator({ rulesField, modelObject, reqBody }) {
       }
     }
 
+    // skip validation if field is optional and has a falsy value
+    if (rule.optional && !value) continue;
+
     // validation for valid email
     if (rule.email) {
       if (!isValidEmail(value)) {
@@ -70,6 +79,25 @@ function fieldValidator({ rulesField, modelObject, reqBody }) {
     if (rule.minLength) {
       if (!isValidPassword(rule.minLength, value))
         return `${ruleField} must be at least ${rule.minLength} characters.`;
+    }
+
+    // validation for valid number
+    if (rule.type === 'number') {
+      if (!isNumber(value)) {
+        return `${ruleField} is not a valid number.`;
+      }
+    }
+
+    if (rule.minNumber) {
+      if (value < rule.minNumber) {
+        return `${ruleField} must be greater than ${rule.minNumber}.`;
+      }
+    }
+
+    if (rule.maxNumber) {
+      if (value > rule.maxNumber) {
+        return `${ruleField} must be less than ${rule.maxNumber}.`;
+      }
     }
   }
 }
