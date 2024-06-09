@@ -26,6 +26,14 @@ class FighterService {
     }
     return item;
   }
+
+  updateFighter(id, dataToUpdate) {
+    const item = fighterRepository.update(id, dataToUpdate);
+    if (!item) {
+      return null;
+    }
+    return item;
+  }
 }
 
 const fighterService = new FighterService();

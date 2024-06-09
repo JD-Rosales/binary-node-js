@@ -48,4 +48,19 @@ router.get(
   responseMiddleware
 );
 
+router.patch(
+  '/:id',
+  updateFighterValid,
+  async (req, res, next) => {
+    const { id } = req.params;
+    const reqBody = req.body;
+    const fighter = await fighterService.updateFighter(id, reqBody);
+
+    res.data = fighter;
+
+    next();
+  },
+  responseMiddleware
+);
+
 export { router };
