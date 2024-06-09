@@ -88,6 +88,15 @@ const updateUserValid = (req, res, next) => {
       });
   }
 
+  // Validate if fighter is stored in the database
+  const { id } = req.params;
+  const user = userService.search({ id });
+  if (!user)
+    return sendJSONResponse(res, {
+      message: `User with an id of ${id} cannot be found.`,
+      code: 404,
+    });
+
   next();
 };
 
