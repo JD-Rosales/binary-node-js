@@ -18,6 +18,14 @@ class FighterService {
     }
     return item;
   }
+
+  getAllFighters() {
+    const item = fighterRepository.getAll();
+    if (!item) {
+      return null;
+    }
+    return item;
+  }
 }
 
 const fighterService = new FighterService();
