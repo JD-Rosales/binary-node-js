@@ -7,6 +7,10 @@ const createFighterValid = (req, res, next) => {
   // TODO: Implement validatior for FIGHTER entity during creation
   const reqBody = req.body;
 
+  // Set default health if not provided
+  req.body.health = req.body.health ? req.body.health : FIGHTER.health;
+  reqBody.health = req.body.health ? req.body.health : FIGHTER.health;
+
   const rulesField = {
     name: { required: true },
     health: {
@@ -19,9 +23,6 @@ const createFighterValid = (req, res, next) => {
     power: { required: true, type: 'number', minNumber: 1, maxNumber: 100 },
     defense: { required: true, type: 'number', minNumber: 1, maxNumber: 10 },
   };
-
-  // Set default health if not provided
-  req.body.health = reqBody.health ? reqBody.health : FIGHTER.health;
 
   const error = fieldValidator({ rulesField, modelObject: FIGHTER, reqBody });
 

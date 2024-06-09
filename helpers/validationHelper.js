@@ -90,13 +90,13 @@ function fieldValidator({ rulesField, modelObject, reqBody }) {
 
     if (rule.minNumber) {
       if (value < rule.minNumber) {
-        return `${ruleField} must be greater than ${rule.minNumber}.`;
+        return `${ruleField} must be greater than or equal to ${rule.minNumber}.`;
       }
     }
 
     if (rule.maxNumber) {
       if (value > rule.maxNumber) {
-        return `${ruleField} must be less than ${rule.maxNumber}.`;
+        return `${ruleField} must be less than or equal to ${rule.maxNumber}.`;
       }
     }
   }
@@ -109,4 +109,5 @@ export {
   isValidEmail,
   isValidPhoneNumber,
   isValidPassword,
+  isNumber,
 };
