@@ -20,6 +20,9 @@ const createFighterValid = (req, res, next) => {
     defense: { required: true, type: 'number', minNumber: 1, maxNumber: 10 },
   };
 
+  // Set default health if not provided
+  req.body.health = reqBody.health ? reqBody.health : FIGHTER.health;
+
   const error = fieldValidator({ rulesField, modelObject: FIGHTER, reqBody });
 
   if (error) return sendJSONResponse(res, { message: error, code: 400 });
