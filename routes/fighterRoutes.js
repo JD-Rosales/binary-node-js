@@ -24,6 +24,19 @@ router.post(
 );
 
 router.get(
+  '/:id',
+  async (req, res, next) => {
+    const { id } = req.params;
+    const fighter = await fighterService.search({ id });
+
+    res.data = fighter;
+
+    next();
+  },
+  responseMiddleware
+);
+
+router.get(
   '/',
   async (req, res, next) => {
     const fighters = await fighterService.getAllFighters();
