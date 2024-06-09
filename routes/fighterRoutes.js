@@ -63,4 +63,17 @@ router.patch(
   responseMiddleware
 );
 
+router.delete(
+  '/:id',
+  async (req, res, next) => {
+    const { id } = req.params;
+    const fighter = await fighterService.deleteFighter(id);
+
+    res.data = fighter;
+
+    next();
+  },
+  responseMiddleware
+);
+
 export { router };

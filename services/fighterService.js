@@ -34,6 +34,15 @@ class FighterService {
     }
     return item;
   }
+
+  deleteFighter(id) {
+    const item = fighterRepository.delete(id);
+    if (!item.length) {
+      return null;
+    }
+
+    return item;
+  }
 }
 
 const fighterService = new FighterService();
