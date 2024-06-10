@@ -1,0 +1,57 @@
+#arena-wrapper {
+  width: 100%;
+  padding-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  position: relative;
+}
+
+#vs__text {
+  position: absolute;
+  top: 4rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: larger;
+  font-style: italic;
+}
+
+.fighter__name {
+  text-align: center;
+  display: block;
+  font-weight: 700;
+  font-size: x-large;
+}
+
+#fighter1-wrapper,
+#fighter2-wrapper {
+  padding-inline: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.health-bar__container {
+  width: 100%;
+  height: 20px;
+  border: 1px solid #000;
+  background-color: #ccc;
+  border-radius: 5px;
+  position: relative;
+}
+
+.health-bar__inner {
+  height: 100%;
+  background-color: #f44336;
+  border-radius: inherit;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.health-bar__text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: white;
+  font-weight: bold;
+}
