@@ -24,7 +24,7 @@ export default function Arena({ fighter1, fighter2 }) {
           style={{
             marginInline: 'auto',
           }}
-          src='https://media1.tenor.com/m/cltDOV8-cxIAAAAC/sakuemon-pixel-art.gif'
+          src='https://media1.tenor.com/m/ux2ZycBoVIYAAAAC/storm-x_men.gif'
           height={450}
         />
       </div>
@@ -41,7 +41,7 @@ export default function Arena({ fighter1, fighter2 }) {
             marginInline: 'auto',
             transform: 'scaleX(-1)',
           }}
-          src='https://media1.tenor.com/m/cltDOV8-cxIAAAAC/sakuemon-pixel-art.gif'
+          src='https://media1.tenor.com/m/ux2ZycBoVIYAAAAC/storm-x_men.gif'
           height={450}
         />
       </div>
