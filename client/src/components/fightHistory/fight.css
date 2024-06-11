@@ -1,0 +1,11 @@
+#fight-history__container {
+  padding-inline: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+
+#fight-history__container h2 {
+  text-align: center;
+}
