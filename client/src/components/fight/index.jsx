@@ -1,10 +1,12 @@
 import React from 'react';
 
 import { getFighters } from '../../services/domainRequest/fightersRequest';
+import { getFights } from '../../services/domainRequest/fightRequest';
 import NewFighter from '../newFighter';
 import Fighter from '../fighter';
 import { Button } from '@material-ui/core';
 import Arena from '../arena';
+import FightHistory from '../fightHistory';
 
 import './fight.css';
 
@@ -14,12 +16,18 @@ class Fight extends React.Component {
     fighter1: null,
     fighter2: null,
     isReady: false,
+    fights: [],
   };
 
   async componentDidMount() {
     const fighters = await getFighters();
     if (fighters && !fighters.error) {
       this.setState({ fighters });
+    }
+
+    const fights = await getFights();
+    if (fights && !fights.error) {
+      this.setState({ fights });
     }
   }
 
@@ -60,6 +68,12 @@ class Fight extends React.Component {
     return fighters.filter((it) => it.id !== fighter1.id);
   };
 
+  getFightList = () => {
+    const fightList = this.state.fights;
+
+    return fightList;
+  };
+
   render() {
     const { fighter1, fighter2 } = this.state;
     const { isReady } = this.state;
@@ -92,6 +106,8 @@ class Fight extends React.Component {
             fightersList={this.getFighter2List() || []}
           />
         </div>
+
+        <FightHistory fightList={this.getFightList() || []} />
       </div>
     );
   }
