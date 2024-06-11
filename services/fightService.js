@@ -10,6 +10,14 @@ class FightsService {
     }
     return item;
   }
+
+  getAllFights() {
+    const item = fightRepository.getAll();
+    if (!item) {
+      return null;
+    }
+    return item;
+  }
 }
 
 const fightsService = new FightsService();

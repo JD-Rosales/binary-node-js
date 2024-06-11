@@ -20,4 +20,16 @@ router.post(
   responseMiddleware
 );
 
+router.get(
+  '/',
+  async (req, res, next) => {
+    const fights = await fightsService.getAllFights();
+
+    res.data = fights;
+
+    next();
+  },
+  responseMiddleware
+);
+
 export { router };
