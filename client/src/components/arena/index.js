@@ -4,6 +4,7 @@ import FighterHealth from './fighterHealth';
 import { getDamage, checkCriticalStrike } from './fight';
 import pressKeys from '../../helpers/keyPressHelper';
 import controls from '../../constants/controls';
+import { createFight } from '../../services/domainRequest/fightRequest';
 
 export default function Arena({ fighter1, fighter2 }) {
   const keys = pressKeys();
@@ -14,6 +15,14 @@ export default function Arena({ fighter1, fighter2 }) {
   const [fightLog, setFightLog] = useState([]);
 
   const currentHealthRef = useRef(currentHealth);
+
+  const saveFightLog = async () => {
+    await createFight({
+      fighter1: fighter1.id,
+      fighter2: fighter2.id,
+      log: fightLog,
+    });
+  };
 
   const handleAttack = ({ attacker, defender, defenderCurrentHealth }) => {
     const damage = getDamage(attacker, defender);
@@ -134,10 +143,12 @@ export default function Arena({ fighter1, fighter2 }) {
 
   useEffect(() => {
     if (currentHealth.fighter1 <= 0) {
+      saveFightLog();
       alert(`${fighter2.name} Wins`);
     }
 
     if (currentHealth.fighter2 <= 0) {
+      saveFightLog();
       alert(`${fighter1.name} Wins`);
     }
   }, [currentHealth]);
